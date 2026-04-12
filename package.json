@@ -5,5 +5,14 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "scripts": {
+    "dev": "start cmd /k \"pnpm -w run dev:api\" & start cmd /k \"pnpm -w run dev:web\"",
+    "dev:api": "pnpm --filter api run start:dev",
+    "dev:web": "pnpm --filter erp-frontend run dev",
+    "dev:mobile": "pnpm --filter mobile-app run start"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
 }
