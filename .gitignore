@@ -29,3 +29,4 @@ test.txt
 *.svg
 *.png
 *.jpg
+.vscode/
