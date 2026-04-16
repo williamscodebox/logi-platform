@@ -1,4 +1,5 @@
 import './App.css'
+import { Dashboard } from './pages/Dashboard/Dashboard'
 import Inventory from './pages/Inventory/inventory'
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
           <p>
             A modular, open-source ERP system built with React and Node.js.
           </p>
+          <Dashboard />
           <Inventory />
           </div>
           

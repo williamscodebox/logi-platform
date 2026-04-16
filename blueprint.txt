@@ -1,0 +1,74 @@
+🧩 SYSTEM BLUEPRINT
+(Diagrams described so you can drop them into FigJam, Miro, or draw.io)
+
+1. High‑Level Architecture (5‑Layer Diagram)
+From your document: “backend platform + ops dashboard + native apps” and “multi‑tenant, secure, scalable”
+
+Draw 5 horizontal layers:
+
+Layer 1 — User Interfaces
+Web Dashboard (Ops managers, planners, finance, carrier partners)
+Real‑time visibility into inventory, POs, shipments, exceptions.
+
+Mobile App (iOS/Android)  
+Scan, update, confirm movements; offline-first; camera access.
+
+External Portals (future)  
+Carriers, customers, suppliers.
+
+Layer 2 — Backend Services
+Each box is a service:
+
+API Gateway / BFF  
+Routes requests from web + mobile.
+
+Inventory Service  
+Maintains on-hand, allocated, available, in-transit.
+
+Warehouse/Task Service  
+Pick, pack, put-away, load/unload, cycle counts.
+
+Order & Fulfillment Service  
+Order intake → allocation → pick/pack → ship.
+
+Shipment & Carrier Service  
+Tracking, label generation, carrier status.
+
+User & Role Service  
+RBAC, authentication, audit logs.
+
+Alerts & Automation Service  
+SLA breaches, stockouts, delays, mismatched scans.
+
+Integration Service  
+ERP, carrier APIs, EDI, webhooks.
+
+All of these map directly to your document’s “Core responsibilities” and “Technical approach” sections.
+
+Layer 3 — Data & Events
+PostgreSQL (primary transactional DB)
+
+Redis (caching, queues)
+
+Event Bus (Kafka/SQS/RabbitMQ)
+For “event-driven flows for status changes” like order received → picked → shipped.
+
+Analytics Warehouse (later)
+
+Layer 4 — Cross‑Cutting
+Auth (OAuth2/OIDC, SSO)
+
+RBAC
+
+Logging, monitoring, metrics
+
+Secrets/config management
+
+Layer 5 — Infrastructure
+AWS/Azure/GCP
+
+Docker + Kubernetes/ECS
+
+CI/CD pipelines
+
+Observability stack

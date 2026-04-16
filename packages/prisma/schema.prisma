@@ -1,0 +1,272 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// -----------------------------
+// ENUMS
+// -----------------------------
+
+enum LocationType {
+  BIN
+  RACK
+  AISLE
+  DOCK
+  STAGING
+}
+
+enum PurchaseOrderStatus {
+  CREATED
+  RECEIVING
+  CLOSED
+  CANCELLED
+}
+
+enum CustomerOrderStatus {
+  CREATED
+  ALLOCATED
+  PICKING
+  PACKED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum TaskType {
+  PICK
+  PUTAWAY
+  LOAD
+  UNLOAD
+  CYCLE_COUNT
+}
+
+enum TaskStatus {
+  OPEN
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum ShipmentStatus {
+  CREATED
+  DISPATCHED
+  IN_TRANSIT
+  DELIVERED
+  DELAYED
+  CANCELLED
+}
+
+// -----------------------------
+// MODELS
+// -----------------------------
+
+model Item {
+  id          Int      @id @default(autoincrement())
+  skuCode     String   @unique
+  description String?
+  unit        String?
+  weight      Float?
+  dimensions  Json?
+  createdAt   DateTime @default(now())
+
+  inventoryBalances InventoryBalance[]
+  purchaseOrderLines PurchaseOrderLine[]
+  customerOrderLines CustomerOrderLine[]
+  tasks              Task[]
+}
+
+model Warehouse {
+  id        Int      @id @default(autoincrement())
+  name      String
+  code      String   @unique
+  address   Json?
+  createdAt DateTime @default(now())
+
+  locations Location[]
+  users     User[]
+  shipments Shipment[] @relation("OriginWarehouse")
+}
+
+model Location {
+  id          Int          @id @default(autoincrement())
+  warehouseId Int
+  code        String
+  type        LocationType
+  zone        String?
+  createdAt   DateTime @default(now())
+
+  warehouse Warehouse @relation(fields: [warehouseId], references: [id])
+  inventoryBalances InventoryBalance[]
+  tasks Task[]
+
+  @@unique([warehouseId, code])
+}
+
+model InventoryBalance {
+  id          Int      @id @default(autoincrement())
+  itemId      Int
+  locationId  Int
+  onHand      Int      @default(0)
+  allocated   Int      @default(0)
+  inTransit   Int      @default(0)
+  updatedAt   DateTime @default(now())
+
+  item     Item     @relation(fields: [itemId], references: [id])
+  location Location @relation(fields: [locationId], references: [id])
+
+  @@unique([itemId, locationId])
+}
+
+model PurchaseOrder {
+  id           Int                   @id @default(autoincrement())
+  poNumber     String                @unique
+  supplier     String?
+  expectedDate DateTime?
+  status       PurchaseOrderStatus
+  createdAt    DateTime              @default(now())
+
+  lines PurchaseOrderLine[]
+}
+
+model PurchaseOrderLine {
+  id     Int @id @default(autoincrement())
+  poId   Int
+  itemId Int
+  quantity Int
+  received Int @default(0)
+
+  purchaseOrder PurchaseOrder @relation(fields: [poId], references: [id])
+  item          Item          @relation(fields: [itemId], references: [id])
+}
+
+model CustomerOrder {
+  id           Int                  @id @default(autoincrement())
+  orderNumber  String               @unique
+  customer     String?
+  promisedDate DateTime?
+  status       CustomerOrderStatus
+  createdAt    DateTime             @default(now())
+
+  lines CustomerOrderLine[]
+  tasks Task[]
+}
+
+model CustomerOrderLine {
+  id        Int @id @default(autoincrement())
+  orderId   Int
+  itemId    Int
+  quantity  Int
+  allocated Int @default(0)
+
+  order CustomerOrder @relation(fields: [orderId], references: [id])
+  item  Item          @relation(fields: [itemId], references: [id])
+}
+
+model Task {
+  id          Int        @id @default(autoincrement())
+  type        TaskType
+  orderId     Int?
+  itemId      Int?
+  locationId  Int?
+  quantity    Int?
+  assignedTo  Int?
+  status      TaskStatus
+  createdAt   DateTime   @default(now())
+  completedAt DateTime?
+
+  order    CustomerOrder? @relation(fields: [orderId], references: [id])
+  item     Item?          @relation(fields: [itemId], references: [id])
+  location Location?      @relation(fields: [locationId], references: [id])
+  user     User?          @relation(fields: [assignedTo], references: [id])
+}
+
+model Shipment {
+  id                  Int            @id @default(autoincrement())
+  shipmentNumber      String         @unique
+  carrier             String?
+  trackingNumber      String?
+  originWarehouseId   Int
+  destination         String?
+  status              ShipmentStatus
+  createdAt           DateTime       @default(now())
+  expectedDelivery    DateTime?      // <-- ADD THIS
+
+  originWarehouse Warehouse @relation("OriginWarehouse", fields: [originWarehouseId], references: [id])
+  stops ShipmentStop[]
+}
+
+model ShipmentStop {
+  id          Int      @id @default(autoincrement())
+  shipmentId  Int
+  stopNumber  Int
+  location    String?
+  eta         DateTime?
+  ata         DateTime?
+
+  shipment Shipment @relation(fields: [shipmentId], references: [id])
+}
+
+model User {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String   @unique
+  passwordHash String
+  warehouseId Int?
+  createdAt   DateTime @default(now())
+
+  warehouse Warehouse? @relation(fields: [warehouseId], references: [id])
+  roles      UserRole[]
+  tasks      Task[]
+  events     Event[]
+}
+
+model Role {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  users       UserRole[]
+  permissions RolePermission[]
+}
+
+model Permission {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  roles RolePermission[]
+}
+
+model UserRole {
+  userId Int
+  roleId Int
+
+  user User @relation(fields: [userId], references: [id])
+  role Role @relation(fields: [roleId], references: [id])
+
+  @@id([userId, roleId])
+}
+
+model RolePermission {
+  roleId       Int
+  permissionId Int
+
+  role       Role       @relation(fields: [roleId], references: [id])
+  permission Permission @relation(fields: [permissionId], references: [id])
+
+  @@id([roleId, permissionId])
+}
+
+model Event {
+  id         Int      @id @default(autoincrement())
+  entityType String?
+  entityId   Int?
+  action     String?
+  userId     Int?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id])
+}

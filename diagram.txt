@@ -1,0 +1,65 @@
+🧬 CORE DOMAIN MODEL (ENTITY DIAGRAM)
+Your document defines the exact entities we need:
+“inventory, purchase orders, shipments, carriers, locations, users, roles, events/logs.”
+
+Represent them as boxes:
+
+Item / SKU
+sku_code, description, dimensions, weight
+
+Location
+warehouse, zone, aisle, rack, bin, dock_door
+
+InventoryBalance
+item_id, location_id, on_hand, allocated, available, in_transit
+
+PurchaseOrder
+po_number, supplier, expected_date, lines, status
+
+Order
+order_number, customer, lines, promised_date, status
+
+Shipment
+shipment_id, carrier, tracking_number, origin, destination, status
+
+Task
+task_id, type (pick, put-away, load, unload), assigned_to, status
+
+User / Role / Permission
+RBAC, SSO, audit logs (as required in your doc)
+
+EventLog
+entity_type, entity_id, action, who, when, where
+
+🔄 EVENT‑DRIVEN FLOW DIAGRAMS
+Flow 1 — Order → Pick → Ship
+Matches your document’s “event-driven flows for status changes.”
+
+Sequence:
+
+ORDER_CREATED
+
+ORDER_ALLOCATED
+
+TASK_CREATED (pick tasks)
+
+Mobile user completes pick → TASK_COMPLETED
+
+Inventory updated
+
+Shipment created → SHIPMENT_DISPATCHED
+
+Alerts service monitors for delays, mismatches, exceptions
+
+Flow 2 — Mobile Offline Sync
+From your doc: “Offline-first behavior… local queueing… conflict resolution.”
+
+User scans item/location
+
+Action stored in local queue
+
+When online → sync engine pushes actions
+
+Backend validates + emits events
+
+Mobile pulls updated tasks/inventory

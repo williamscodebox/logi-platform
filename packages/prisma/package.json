@@ -1,0 +1,18 @@
+{
+  "name": "@logi/prisma",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "generate": "prisma generate",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@prisma/client": "latest",
+    "prisma": "latest"
+  },
+  "devDependencies": {
+    "prisma": "latest",
+    "typescript": "^5.0.0"
+  }
+}

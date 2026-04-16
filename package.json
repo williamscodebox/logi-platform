@@ -6,6 +6,8 @@
     "apps/*",
     "packages/*"
   ],
+  "type": "module",
+
   "scripts": {
     "dev": "start cmd /k \"pnpm -w run dev:api\" & start cmd /k \"pnpm -w run dev:web\"",
     "dev:api": "pnpm --filter api run start:dev",
@@ -13,6 +15,16 @@
     "dev:mobile": "pnpm --filter mobile-app run start"
   },
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "@types/node": "^25.6.0",
+    "concurrently": "^9.2.1",
+    "prisma": "^7.7.0"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.7.0",
+    "@prisma/client": "^7.7.0",
+    "dotenv": "^17.4.2",
+    "pg": "^8.20.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.2"
   }
 }
