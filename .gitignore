@@ -30,3 +30,6 @@ test.txt
 *.png
 *.jpg
 .vscode/
+/generated/prisma
+
+/generated/prisma
