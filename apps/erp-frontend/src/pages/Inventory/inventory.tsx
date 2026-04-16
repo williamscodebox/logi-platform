@@ -8,14 +8,16 @@ export const Inventory = () => {
     const load = async () => {
       try {
         const data = await getInventory();
-        setInventory(data.status);
+        setInventory(data.count);
+        console.log("Inventory loaded:", data);
+        console.log("Inventory:", inventory);
       } catch (err) {
         console.error("Failed to load inventory:", err);
       }
     };
 
     void load(); // avoids floating Promise warning
-  }, []);
+  }, [inventory]);
 
   return (
     <div>
