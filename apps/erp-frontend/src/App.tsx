@@ -1,6 +1,6 @@
 import './App.css'
 import { Dashboard } from './pages/Dashboard/Dashboard'
-import Inventory from './pages/Inventory/inventory'
+import Inventory from './pages/Inventory/Inventory'
 
 function App() {
 
