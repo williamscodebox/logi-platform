@@ -34,3 +34,8 @@ test.txt
 /generated/prisma
 
 /generated/prisma
+seed.ts
+/prisma/prisma/migrations/
+migrations/
+*.migrations
+*.sql
