@@ -5,13 +5,18 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "generate": "prisma generate",
-    "build": "tsc"
+    "build": "tsc",
+    "prisma": "prisma"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "latest",
     "prisma": "latest"
   },
   "devDependencies": {
+    "@types/pg": "^8.20.0",
     "prisma": "latest",
     "typescript": "^5.0.0"
   }
