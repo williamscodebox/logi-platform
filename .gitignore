@@ -33,6 +33,10 @@ test.txt
 .git/
 /generated/prisma
 
+# Frontend
+# Backend
+# Mobile
+
 /generated/prisma
 seed.ts
 packages/prisma/prisma/migrations/
