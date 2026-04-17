@@ -39,3 +39,5 @@ packages/prisma/prisma/migrations/
 migrations/
 *.migrations
 *.sql
+design.txt
+setup.txt
