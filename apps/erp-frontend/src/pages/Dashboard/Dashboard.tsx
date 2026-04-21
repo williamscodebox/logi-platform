@@ -5,6 +5,7 @@ import { api } from "../../api/client";
 
 export type SummaryResponse = {
   allOrders: number;
+  lowInventory: number;
 };
 
 export function Dashboard() {
@@ -31,8 +32,8 @@ export function Dashboard() {
   return (
     <div>
       <KPI label="Open Orders" value={data.allOrders} />
-      {/* <KPI label="Late Shipments" value={data.lateShipments} />
-      <KPI label="Low Inventory" value={data.lowInventory} /> */}
+      {/* <KPI label="Late Shipments" value={data.lateShipments} />*/}
+      <KPI label="Low Inventory" value={data.lowInventory} /> 
     </div>
   );
 }
