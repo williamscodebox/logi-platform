@@ -3,10 +3,8 @@ import { KPI } from "../../components/KPI";
 import { SkeletonKPI } from "../../components/SkeletonKPI";
 import { api } from "../../api/client";
 
-type SummaryResponse = {
-  openOrders: number;
-  lateShipments: number;
-  lowInventory: number;
+export type SummaryResponse = {
+  allOrders: number;
 };
 
 export function Dashboard() {
@@ -32,9 +30,9 @@ export function Dashboard() {
 
   return (
     <div>
-      <KPI label="Open Orders" value={data.openOrders} />
-      <KPI label="Late Shipments" value={data.lateShipments} />
-      <KPI label="Low Inventory" value={data.lowInventory} />
+      <KPI label="Open Orders" value={data.allOrders} />
+      {/* <KPI label="Late Shipments" value={data.lateShipments} />
+      <KPI label="Low Inventory" value={data.lowInventory} /> */}
     </div>
   );
 }
