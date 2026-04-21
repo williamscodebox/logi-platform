@@ -1,9 +1,7 @@
 import axios from "axios";
 
-type SummaryResponse = {
-  openOrders: number;
-  lateShipments: number;
-  lowInventory: number;
+export type SummaryResponse = {
+  allOrders: number;
 };
 
 export const api = {
