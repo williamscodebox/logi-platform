@@ -8,6 +8,10 @@ export default defineConfig({
       '/dashboard': {
         target: 'http://localhost:3000', // your NestJS backend
         changeOrigin: true,
+      }, 
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
       },
     }, 
   },
