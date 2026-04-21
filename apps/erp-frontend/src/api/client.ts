@@ -2,6 +2,7 @@ import axios from "axios";
 
 export type SummaryResponse = {
   allOrders: number;
+  lowInventory: number;
 };
 
 export const api = {
