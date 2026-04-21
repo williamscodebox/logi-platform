@@ -1,38 +1,11 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-
-    "strict": true,
-    "strictNullChecks": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-
+    "rootDir": "./src",
+    "outDir": "./dist",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "useDefineForClassFields": false,
-
-    "isolatedModules": true,
-    "resolvePackageJsonExports": true,
-
-    "sourceMap": true,
-    "removeComments": true,
-    "incremental": true,
-
-    "typeRoots": [
-      "./node_modules/@types",
-      "../../packages/prisma/dist"
-    ]
+    "useDefineForClassFields": false
   },
-
-  "exclude": [
-    "node_modules",
-    "dist",
-    "test",
-    "**/*.spec.ts"
-  ]
+  "include": ["src/**/*"]
 }
