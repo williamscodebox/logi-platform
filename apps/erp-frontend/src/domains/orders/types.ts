@@ -36,7 +36,7 @@ export type Order = {
   customer: string | null;
   orderNumber: string;
   createdAt: string;
-  promisedDate: string | null;
+  promisedDate: string | number | Date;
   status: OrderStatus;
 };
 
