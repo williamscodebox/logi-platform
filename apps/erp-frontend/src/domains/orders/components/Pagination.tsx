@@ -1,3 +1,5 @@
+import './../../../routes/orders/orders.css';
+
 interface PaginationProps {
   page: number;
   pageSize: number;
@@ -11,6 +13,7 @@ export function Pagination({ page, pageSize, total, onChange }: PaginationProps)
   return (
     <div className="pagination">
       <button
+        className='bottomButton'
         disabled={page <= 1}
         onClick={() => onChange(page - 1)}
       >
@@ -22,6 +25,7 @@ export function Pagination({ page, pageSize, total, onChange }: PaginationProps)
       </span>
 
       <button
+        className='bottomButton'
         disabled={page >= totalPages}
         onClick={() => onChange(page + 1)}
       >
