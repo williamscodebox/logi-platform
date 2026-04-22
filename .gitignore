@@ -45,3 +45,4 @@ migrations/
 *.sql
 design.txt
 setup.txt
+visualization.txt
