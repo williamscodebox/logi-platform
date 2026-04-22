@@ -26,7 +26,10 @@ export function OrdersIndexPage() {
           <h1>Orders</h1>
           <p>Manage sales orders and their fulfillment status.</p>
         </div>
-        <button onClick={() => navigate('/orders/new')}>New order</button>
+        <div className='orderIndexButton'>
+          <button onClick={() => navigate('/')}>Dashboard</button>
+          <button onClick={() => navigate('/orders/new')}>New order</button>
+        </div>
       </header>
 
       {/* TODO: FilterBar component */}
