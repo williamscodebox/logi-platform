@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useOrdersList } from '../../domains/orders/hooks/useOrdersList';
 import { OrdersTable } from '../../domains/orders/components/OrdersTable';
 import type { OrdersListFilters } from '../../domains/orders/types';
+import { Pagination } from '../../domains/orders/components/Pagination';
+import './orders.css';
 
 const DEFAULT_FILTERS: OrdersListFilters = {
   page: 1,
@@ -11,8 +13,11 @@ const DEFAULT_FILTERS: OrdersListFilters = {
 
 export function OrdersIndexPage() {
   const [filters, setFilters] = useState<OrdersListFilters>(DEFAULT_FILTERS);
-  const { data, isLoading } = useOrdersList(filters);
+  const { data, isLoading, error } = useOrdersList(filters);
   const navigate = useNavigate();
+
+  const items = data?.items ?? [];
+  const total = data?.total ?? 0;
 
   return (
     <div className="page">
@@ -28,14 +33,24 @@ export function OrdersIndexPage() {
       {/* <FilterBar ... /> */}
 
       {isLoading && <div>Loading…</div>}
+      {error && <div className="error">Failed to load orders.</div>}
 
-      {data && (
+
+
+      {!isLoading && !error && (
         <>
-          <OrdersTable
-            orders={data.items}
-            onRowClick={(order) => navigate(`/orders/${order.id}`)}
-          />
-          {/* TODO: Pagination component */}
+          <div className='page-content'>
+            <OrdersTable
+              orders={items}
+              onRowClick={(order) => navigate(`/orders/${order.id}`)}
+            />
+          </div>
+          <Pagination
+          page={filters.page}
+          pageSize={filters.pageSize}
+          total={total}
+          onChange={(page) => setFilters((f) => ({ ...f, page }))}
+          /> 
         </>
       )}
     </div>
