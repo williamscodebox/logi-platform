@@ -11,12 +11,12 @@ export function OrdersTable({ orders, onRowClick }: OrdersTableProps) {
     <table className="orders-table">
       <thead>
         <tr>
+          <th>ID</th>
           <th>Order #</th>
           <th>Customer</th>
           <th>Status</th>
           <th>Order date</th>
-          {/* <th>Required date</th> */}
-          {/* <th>Total</th> */}
+          <th>Promised date</th>
         </tr>
       </thead>
       <tbody>
@@ -26,12 +26,12 @@ export function OrdersTable({ orders, onRowClick }: OrdersTableProps) {
             onClick={() => onRowClick?.(o)}
             style={{ cursor: onRowClick ? 'pointer' : 'default' }}
           >
+            <td>{o.id}</td>
             <td>{o.orderNumber}</td>
             <td>{o.customer}</td>
             <td><OrderStatusPill status={o.status} /></td>
             <td>{new Date(o.createdAt).toLocaleDateString()}</td>
-            {/* <td>{new Date(o.requiredDate).toLocaleDateString()}</td> */}
-            {/* <td>{o.grandTotal.toFixed(2)} {o.currency}</td> */}
+            <td>{new Date(o.promisedDate).toLocaleDateString()}</td>
           </tr>
         ))}
       </tbody>
