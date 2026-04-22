@@ -1,0 +1,16 @@
+/* OrdersIndexPage */
+
+.page {
+  margin: .5rem;
+  padding: 4px;
+  min-height: 95vh;
+  /* outline: 2px solid red; */
+  display: flex;
+  flex-direction: column;
+}
+
+.page-content {
+  flex: 1; /* pushes pagination to bottom */
+  display: flex;
+  flex-direction: column;
+}
