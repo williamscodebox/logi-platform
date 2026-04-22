@@ -14,7 +14,7 @@ export function OrderDetailPage() {
       <header className="page-header">
         <div>
           <h1>{order.orderNumber}</h1>
-          <p>{order.customerName}</p>
+          <p>{order.customer}</p>
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <OrderStatusPill status={order.status} />
