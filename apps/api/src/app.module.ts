@@ -4,6 +4,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaService } from './prisma/prisma.service';
 import { DashboardModule } from './Dashboard/dashboard.module';
+import { InventoryModule } from './Inventory/inventory.module';
+import { OrdersModule } from './Orders/orders.module';
 
 @Module({
   imports: [
@@ -11,8 +13,8 @@ import { DashboardModule } from './Dashboard/dashboard.module';
       isGlobal: true,
     }),
     DashboardModule,
-    // InventoryModule,
-    // OrdersModule,
+    InventoryModule,
+    OrdersModule,
     // ShipmentsModule,
     // WarehouseModule,
     // UsersModule,
