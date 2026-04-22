@@ -15,22 +15,31 @@ export interface OrderLine {
   locationId: string | null;
 }
 
-export interface Order {
-  id: string;
+// export interface Order {
+//   id: string;
+//   orderNumber: string;
+//   customerId: string;
+//   customer: string;
+//   status: OrderStatus;
+//   orderDate: string;      // ISO
+//   requiredDate: string;   // ISO
+//   currency: string;
+//   subtotal: number;
+//   taxTotal: number;
+//   grandTotal: number;
+//   lines: OrderLine[];
+//   createdAt: string;
+//   updatedAt: string;
+// }
+export type Order = {
+  id: number;
+  customer: string | null;
   orderNumber: string;
-  customerId: string;
-  customerName: string;
-  status: OrderStatus;
-  orderDate: string;      // ISO
-  requiredDate: string;   // ISO
-  currency: string;
-  subtotal: number;
-  taxTotal: number;
-  grandTotal: number;
-  lines: OrderLine[];
   createdAt: string;
-  updatedAt: string;
-}
+  promisedDate: string | null;
+  status: OrderStatus;
+};
+
 
 export interface OrdersListFilters {
   search?: string;
