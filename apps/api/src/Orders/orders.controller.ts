@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 
 // orders.controller.ts
@@ -7,7 +7,7 @@ export class OrdersController {
   constructor(private readonly service: OrdersService) {}
 
   @Get('orders')
-  async getOrders() {
-    return this.service.getOrders();
+  async getOrders(@Query('page') page = 1, @Query('pageSize') pageSize = 25) {
+    return this.service.getOrders(Number(page), Number(pageSize));
   }
 }
