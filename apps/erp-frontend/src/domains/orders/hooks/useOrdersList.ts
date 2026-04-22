@@ -1,11 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchOrders } from '../api/ordersApi';
-import type { OrdersListFilters } from '../types';
+import type { OrdersListFilters, Order } from '../types';
+
+type OrdersListResponse = {
+  items: Order[];
+  total: number;
+  page: number;
+  pageSize: number;
+};
 
 export function useOrdersList(filters: OrdersListFilters) {
-  return useQuery({
+  return useQuery<OrdersListResponse>({
     queryKey: ['orders', filters],
     queryFn: () => fetchOrders(filters),
-    keepPreviousData: true,
+    placeholderData: (prev) => prev,
   });
 }
