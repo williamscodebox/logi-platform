@@ -12,12 +12,12 @@ export class DashboardService {
   ) {}
   //   private readonly shipmentsRepo: ShipmentsRepository
   async getSummary() {
-    const { allOrders } = await this.ordersRepo.countOpenOrders();
+    // const { allOrders } = await this.ordersRepo.countOpenOrders();
     // const lateShipments = await this.shipmentsRepo.countLateShipments();
     const lowInventory = await this.inventoryRepo.countLowStock();
 
     return {
-      allOrders,
+      // allOrders,
       lowInventory,
       // lateShipments,
     };
